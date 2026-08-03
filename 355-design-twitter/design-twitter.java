@@ -16,27 +16,39 @@ class Twitter {
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        List<int[]> feedTweets=new ArrayList<>();
-        //add users own tweets first
-        if(tweetMap.containsKey(userId)){
-            feedTweets.addAll(tweetMap.get(userId));
+        //optimal approach using heap
+       List<Integer> ans=new ArrayList<>();
+       //{timestamp,tweetId,userId,index}
+       PriorityQueue<int[]> maxHeap= new PriorityQueue<>((a,b)->b[0]-a[0]);
+       //add users own latest tweet
+       if(tweetMap.containsKey(userId)){
+        List<int[]> tweets=tweetMap.get(userId);
+        int last=tweets.size()-1;
+        int[] tweet=tweets.get(last);
+        maxHeap.add(new int[]{tweet[0],tweet[1],userId,last});
+       }
+       //add latest tweet of every followee
+       if(followMap.containsKey(userId)){
+        for(int followee: followMap.get(userId)){
+            if(!tweetMap.containsKey(followee)) continue;
+            List<int[]> tweets=tweetMap.get(followee);
+            int last=tweets.size()-1;
+            int[] tweet=tweets.get(last);
+            maxHeap.add(new int[]{tweet[0],tweet[1],followee,last});
         }
-        //add followees tweets
-        //check if user follows someone
-        if(followMap.containsKey(userId)){
-            for(int followee: followMap.get(userId)){
-                //check if followee tweeted something
-                if(tweetMap.containsKey(followee))
-                feedTweets.addAll(tweetMap.get(followee));
-            }
+       }
+       while(!maxHeap.isEmpty() && ans.size()<10){
+        int[] curr=maxHeap.poll();
+        ans.add(curr[1]);
+        int user=curr[2];
+        int index=curr[3];
+        //push the next older tweet of same user
+        if(index>0){
+            List<int[]> tweets=tweetMap.get(user);
+            int[] prev=tweets.get(index-1);
+            maxHeap.add(new int[]{prev[0],prev[1],user,index-1});
         }
-        //sort ny the latest tweet
-        feedTweets.sort((a,b)->b[0]-a[0]);
-        //return a list with tweet ids
-        List<Integer> ans=new ArrayList<>();
-        for(int i=0;i<Math.min(10,feedTweets.size());i++){
-            ans.add(feedTweets.get(i)[1]);
-        }
+       }
         return ans;
 
 
