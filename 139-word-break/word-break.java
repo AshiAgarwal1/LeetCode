@@ -4,9 +4,9 @@ class Solution {
     private boolean solve(int idx,String s,List<String> wordDict){
         if(idx==n) return true;
         if(dp[idx] != null) return dp[idx];
-        for(int endIdx=idx+1;endIdx<=n;endIdx++){
-            String split=s.substring(idx,endIdx);
-            if(wordDict.contains(split) && solve(endIdx,s,wordDict)) return dp[idx]=true;
+        for(int l=1;l<=n-idx;l++){
+            String split=s.substring(idx,idx+l);
+            if(wordDict.contains(split) && solve(idx+l,s,wordDict)) return dp[idx]=true;
         }
         return dp[idx]=false;
     }
