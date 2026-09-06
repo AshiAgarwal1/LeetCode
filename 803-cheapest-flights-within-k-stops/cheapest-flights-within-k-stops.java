@@ -39,7 +39,7 @@ class Solution {
             for(Pair x:adj.get(node)){
                 int adjNode=x.first;
                 int edWt=x.second;
-                if(cost+edWt<dist[adjNode] && stops<=k){
+                if(cost+edWt<dist[adjNode]){
                     dist[adjNode]=cost+edWt;
                     q.add(new Tuple(stops+1,adjNode,cost+edWt));
                 }
