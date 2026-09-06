@@ -45,7 +45,7 @@ class Solution {
                 }
             }
         }
-        if(dist[dst]==1e9) return -1;
+        if(dist[dst]==(int)(1e9)) return -1;
         return dist[dst];
     }
 }
