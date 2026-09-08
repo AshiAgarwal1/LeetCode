@@ -18,7 +18,7 @@ class Solution {
         }
         PriorityQueue<Pair> pq=new PriorityQueue<>((x,y)->Long.compare(x.first,y.first));
         long[] dist=new long[n];
-        long[] ways=new long[n];
+        int[] ways=new int[n];
         Arrays.fill(dist,Long.MAX_VALUE);
         dist[0]=0;
         ways[0]=1;
@@ -42,6 +42,6 @@ class Solution {
                 }
             }
         }
-        return (int)ways[n-1]%mod;
+        return ways[n-1]%mod;
     }
 }
