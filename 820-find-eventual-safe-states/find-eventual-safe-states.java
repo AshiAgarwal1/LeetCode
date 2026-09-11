@@ -18,13 +18,6 @@ class Solution {
     }
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int n=graph.length;
-        /*ArrayList<ArrayList<Integer>> adj= new ArrayList<>();
-        for(int i=0;i<n;i++){
-            adj.add(new ArrayList<>());
-        }
-        for(int i=0;i<n;i++){
-            adj.get(i).add()
-        }*/
         int[] vis=new int[n];
         int[] pathVis=new int[n];
         int[] check=new int[n];
