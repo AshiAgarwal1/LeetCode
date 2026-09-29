@@ -8,12 +8,13 @@ class Solution {
         Arrays.fill(cnt,1);
         for(int i=0;i<n;i++){
             for(int prev=0;prev<i;prev++){
-                if(nums[i]>nums[prev] && dp[i]<dp[prev]+1){
-                    dp[i]=1+dp[prev];
-                    cnt[i]=cnt[prev];
-                }
-                else if(nums[i]>nums[prev] && dp[i]==dp[prev]+1){
-                cnt[i]+=cnt[prev];
+                if(nums[i]>nums[prev]){
+                    if(dp[i]<dp[prev]+1){
+                        dp[i]=1+dp[prev];
+                        cnt[i]=cnt[prev];
+                    }
+                    else if(dp[i]==dp[prev]+1)
+                        cnt[i]+=cnt[prev];
                 }
             }
             maxi=Math.max(maxi,dp[i]);
