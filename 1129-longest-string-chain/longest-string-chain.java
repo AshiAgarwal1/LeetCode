@@ -10,7 +10,8 @@ class Solution {
             }
             else first++;
         }
-        return (first==s1.length() && second==s2.length());
+        if(first==s1.length() && second==s2.length()) return true;
+        return false;
     }
     public int longestStrChain(String[] words) {
         int n=words.length;
