@@ -2,31 +2,31 @@ class Solution {
     public boolean isMatch(String s, String p) {
         int n=s.length();
         int m=p.length();
-        boolean[][] dp=new boolean[n+1][m+1];
+        boolean[]prev=new boolean[m+1];
         
-        dp[0][0]=true;
-        for(int i=1;i<=n;i++){
-            dp[i][0]=false;
-        }
+        prev[0]=true;
         for(int j=1;j<=m;j++){
             boolean flag=true;
             for(int k=1;k<=j;k++){
-                if(p.charAt(k-1)!='*') {
+                if(p.charAt(k-1)!='*') {//have i only seen stars so far 
                     flag=false;
                     break;}
             }
-            dp[0][j]= flag;
+            prev[j]= flag;
         }
         for(int i=1;i<=n;i++){
+            boolean[]curr=new boolean[m+1];
+            curr[0]=false;
             for(int j=1;j<=m;j++){
                 if(s.charAt(i-1)==p.charAt(j-1) || p.charAt(j-1)=='?') 
-                    dp[i][j]=dp[i-1][j-1];
+                    curr[j]=prev[j-1];
                 else if(p.charAt(j-1)=='*') 
-                    dp[i][j]=dp[i][j-1] || dp[i-1][j];
+                    curr[j]=curr[j-1] || prev[j];
                 else 
-                    dp[i][j]=false;
+                    curr[j]=false;
             }
+            prev=curr;
         }
-        return dp[n][m];
+        return prev[m];
     }
 }
