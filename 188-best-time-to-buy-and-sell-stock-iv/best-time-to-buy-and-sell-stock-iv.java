@@ -1,18 +1,17 @@
 class Solution {
-    public int f(int i,int tranNo,int k,int[] prices,int n,int[][] dp){
-        if(i==n || tranNo==2*k) return 0;
-        if(dp[i][tranNo]!=-1) return dp[i][tranNo];
-        if(tranNo % 2==0){//buy
-            return dp[i][tranNo] = Math.max(-prices[i]+f(i+1,tranNo+1,k,prices,n,dp), f(i+1,tranNo,k,prices,n,dp));
-        }
-        //sell
-        return dp[i][tranNo] = Math.max(prices[i]+f(i+1,tranNo+1,k,prices,n,dp), f(i+1,tranNo,k,prices,n,dp));
-    }
     public int maxProfit(int k, int[] prices) {
         int n=prices.length;
-        int[][] dp=new int[n][2*k];
-        for(int[] row:dp) Arrays.fill(row,-1);
-
-        return f(0,0,k,prices,n,dp);
+        int[][] dp=new int[n+1][2*k+1];
+        
+        for(int i=n-1;i>=0;i--){
+            for(int tranNo=2*k-1;tranNo>=0;tranNo--){
+               if(tranNo % 2==0){//buy
+            dp[i][tranNo] = Math.max(-prices[i]+dp[i+1][tranNo+1], dp[i+1][tranNo]);
+        }
+        //sell
+        else dp[i][tranNo] = Math.max(prices[i]+dp[i+1][tranNo+1], dp[i+1][tranNo]); 
+            }
+        }
+        return dp[0][0];
     }
 }
