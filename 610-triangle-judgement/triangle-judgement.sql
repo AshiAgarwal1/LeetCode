@@ -6,4 +6,4 @@ SELECT x, y, z,
            THEN 'Yes'
            ELSE 'No'
        END AS triangle
-FROM Triangle
+FROM Triangle;
