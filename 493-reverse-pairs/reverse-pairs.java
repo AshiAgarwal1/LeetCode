@@ -11,9 +11,7 @@ class Solution {
         while(left<=mid) temp[k++]=nums[left++];
         while(right<=high) temp[k++]=nums[right++];
         //transfer ele from temp to arr 
-        for(int i=low;i<=high;i++){
-            nums[i]=temp[i-low];
-        }
+        System.arraycopy(temp,0,nums,low,temp.length);
     }
     int countPairs(int[] nums,int low,int mid,int high){
         int right=mid+1;
